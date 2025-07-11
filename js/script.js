@@ -23,14 +23,28 @@ function startCountdown() {
 
     if (countdown <= 0) {
       clearInterval(timer);
-      instructions.style.display = 'none';
+      instructions.textContent = 'Time is up! Now enter the numbers you remember.';
       numList.classList.remove('d-flex');
       numList.classList.add('d-none');
       countdownTimer.style.display = 'none';
       answers.classList.remove('d-none');
       answerInput.style.display = 'block';
-      submitButton.style.display = 'block';
     }
   }, 1000);
 }
 startCountdown();
+submitButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  let userAnswer = [];
+  for (let i = 0; i < 5; i++) {
+    userAnswer.push(numAnswer[i].value);
+  }
+  let correctAnswers = 0;
+  for (let i = 0; i < 5; i++) {
+    if (userAnswer[i] === li[i].textContent) {
+      correctAnswers++;
+    }
+  }
+
+});
+
