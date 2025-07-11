@@ -3,8 +3,8 @@ const instructions = document.getElementById('instructions');
 let numList = document.getElementById('numbers-list');
 const answers = document.getElementById('answers-form');
 const answerInput = document.getElementById('input-group');
-const numAnswer = document.querySelectorAll('form-control');
-const submitButton = document.querySelector('btn');
+const numAnswer = document.querySelectorAll('.form-control');
+let submitButton = document.querySelector('.btn');
 const result = document.getElementById('message');
 
 let timer;
@@ -18,8 +18,8 @@ for (let i = 0; i < 5; i++) {
 let li = document.querySelectorAll('num');
 function startCountdown() {
   timer = setInterval(() => {
-    countdown--;
     countdownTimer.textContent = countdown;
+    countdown--;
 
     if (countdown <= 0) {
       clearInterval(timer);
@@ -36,12 +36,14 @@ startCountdown();
 submitButton.addEventListener('click', (e) => {
   e.preventDefault();
   let userAnswer = [];
+ 
   for (let i = 0; i < 5; i++) {
-    userAnswer.push(numAnswer[i].value);
+    userAnswer.push(numAnswer[i]);
+    console.log(userAnswer[i]);
   }
   let correctAnswers = 0;
   for (let i = 0; i < 5; i++) {
-    if (userAnswer[i] === li[i].textContent) {
+    if (userAnswer[i] === li[i]) {
       correctAnswers++;
     }
   }
