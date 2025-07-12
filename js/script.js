@@ -9,13 +9,12 @@ const result = document.getElementById('message');
 
 let timer;
 let countdown = 10;
-
+let randomNum = [];
 numList.style.display = 'block';
 for (let i = 0; i < 5; i++) {
-  let randomNum = Math.floor(Math.random() * 50 + 1);
-  document.getElementById('numbers-list').innerHTML += `<li class ="num">${randomNum}</li>`;
+  randomNum.push(Math.floor(Math.random() * 50 + 1));
+  numList.innerHTML += `<li>${randomNum[i]}</li>`;
 }
-let li = document.querySelectorAll('num');
 function startCountdown() {
   timer = setInterval(() => {
     countdownTimer.textContent = countdown;
@@ -23,7 +22,7 @@ function startCountdown() {
 
     if (countdown <= 0) {
       clearInterval(timer);
-      instructions.textContent = 'Time is up! Now enter the numbers you remember.';
+      instructions.textContent = 'Tempo scaduto! Ora inserisci i numeri che ricordi.';
       numList.classList.remove('d-flex');
       numList.classList.add('d-none');
       countdownTimer.style.display = 'none';
@@ -32,20 +31,31 @@ function startCountdown() {
     }
   }, 1000);
 }
+
+
+
+
 startCountdown();
 submitButton.addEventListener('click', (e) => {
   e.preventDefault();
   let userAnswer = [];
- 
-  for (let i = 0; i < 5; i++) {
-    userAnswer.push(numAnswer[i]);
-    console.log(userAnswer[i]);
-  }
+  console.log(randomNum);
   let correctAnswers = 0;
   for (let i = 0; i < 5; i++) {
-    if (userAnswer[i] === li[i]) {
+    userAnswer.push(answerInput.children[i].value);
+    console.log(userAnswer);
+    if (userAnswer[i] == randomNum[i]) {
       correctAnswers++;
     }
+  }
+  console.log(correctAnswers);
+  if (correctAnswers === 5) {
+    result.textContent = 'Congratulations! You remembered all the numbers correctly!';
+  } else {
+    result.textContent = `You remembered ${correctAnswers} out of 5 numbers correctly.`;
+    setInterval(() => {
+      result.textContent = '';
+    }, 5000);
   }
 
 });
