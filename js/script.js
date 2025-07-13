@@ -15,6 +15,7 @@ for (let i = 0; i < 5; i++) {
   randomNum.push(Math.floor(Math.random() * 50 + 1));
   numList.innerHTML += `<li>${randomNum[i]}</li>`;
 }
+
 function startCountdown() {
   timer = setInterval(() => {
     countdownTimer.textContent = countdown;
@@ -31,32 +32,35 @@ function startCountdown() {
     }
   }, 1000);
 }
-
-
-
-
 startCountdown();
+
 submitButton.addEventListener('click', (e) => {
   e.preventDefault();
   let userAnswer = [];
-  console.log(randomNum);
+ 
   let correctAnswers = 0;
+
   for (let i = 0; i < 5; i++) {
-    userAnswer.push(answerInput.children[i].value);
-    console.log(userAnswer);
-    if (userAnswer[i] == randomNum[i]) {
+    userAnswer.push(parseInt(numAnswer[i].value));
+    
+    if (randomNum.includes(userAnswer[i])) {
       correctAnswers++;
     }
+
   }
-  console.log(correctAnswers);
+
   if (correctAnswers === 5) {
-    result.textContent = 'Congratulations! You remembered all the numbers correctly!';
+    result.textContent = 'Congratiulazioni! Hai ricordato tutti i numeri correttamente!';
   } else {
-    result.textContent = `You remembered ${correctAnswers} out of 5 numbers correctly.`;
+    result.textContent = ` Ricordi ${correctAnswers} numeri su  5.`
     setInterval(() => {
       result.textContent = '';
     }, 5000);
   }
 
 });
+
+
+
+ 
 
