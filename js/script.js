@@ -9,17 +9,28 @@ const result = document.getElementById('message');
 
 let timer;
 let countdown = 10;
-let randomNum = [];
 numList.style.display = 'block';
+const generateRandNums = (min, max) => {
+  let randomNum = [];
+
+  while (randomNum.length < 5) {
+    let number = Math.floor(Math.random() * (max - min + 1)) + min;
+    if (randomNum.includes(number) === false) {
+      randomNum.push(number);
+    }
+  }
+  return randomNum;
+}
+const random = generateRandNums(1, 50)
 for (let i = 0; i < 5; i++) {
-  randomNum.push(Math.floor(Math.random() * 50 + 1));
-  numList.innerHTML += `<li>${randomNum[i]}</li>`;
+  numList.innerHTML += `<li>${random[i]}</li>`;
 }
 
+countdownTimer.textContent = countdown;
 function startCountdown() {
   timer = setInterval(() => {
-    countdownTimer.textContent = countdown;
     countdown--;
+    countdownTimer.textContent = countdown;
 
     if (countdown <= 0) {
       clearInterval(timer);
@@ -34,33 +45,35 @@ function startCountdown() {
 }
 startCountdown();
 
-submitButton.addEventListener('click', (e) => {
-  e.preventDefault();
+const confirm = () => {
+
   let userAnswer = [];
- 
-  let correctAnswers = 0;
+
+  let correctAnswers = [];
 
   for (let i = 0; i < 5; i++) {
     userAnswer.push(parseInt(numAnswer[i].value));
-    
-    if (randomNum.includes(userAnswer[i])) {
-      correctAnswers++;
+  }
+  for (i = 0; i < 5; i++) {
+    if (random.includes(userAnswer[i])) {
+      correctAnswers.push(userAnswer[i]);
     }
-
   }
 
-  if (correctAnswers === 5) {
-    result.textContent = 'Congratiulazioni! Hai ricordato tutti i numeri correttamente!';
-  } else {
-    result.textContent = ` Ricordi ${correctAnswers} numeri su  5.`
-    setInterval(() => {
-      result.textContent = '';
-    }, 5000);
-  }
+  result.innerHTML = `ricordi ${correctAnswers.length}. i numeri corretti sono (${correctAnswers}.)`
+};
 
-});
+
+submitButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  confirm();
+})
 
 
 
- 
+
+
+
+
+
 
