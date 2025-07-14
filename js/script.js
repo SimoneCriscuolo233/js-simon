@@ -55,7 +55,7 @@ const confirm = () => {
     userAnswer.push(parseInt(numAnswer[i].value));
   }
   for (i = 0; i < 5; i++) {
-    if (random.includes(userAnswer[i])) {
+    if (random.includes(userAnswer[i]) && !correctAnswers.includes(userAnswer[i])) {
       correctAnswers.push(userAnswer[i]);
     }
   }
